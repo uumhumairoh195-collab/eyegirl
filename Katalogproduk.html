@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canon Indonesia — Capture Inspired</title>
+
+  <!-- CSS digabung semua di sini (Embedded + External jadi satu) -->
+  <style>
+
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+/* ---- Reset & Base ---- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --red:       #CC0000;
+  --red-dark:  #8B0000;
+  --red-light: #FF2B2B;
+  --black:     #0D0D0D;
+  --charcoal:  #1A1A1A;
+  --gray-900:  #222222;
+  --gray-700:  #444444;
+  --gray-400:  #888888;
+  --gray-100:  #F5F5F5;
+  --white:     #FFFFFF;
+  --gold:      #C9A84C;
+  --shadow:    0 8px 40px rgba(0,0,0,0.18);
+  --radius:    12px;
+  --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'DM Sans', Arial, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--white);
+  color: var(--black);
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--gray-100); }
+::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+
+
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(10,10,10,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--red);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  height: 70px;
+  transition: var(--transition);
+}
+.navbar.scrolled { height: 60px; background: rgba(10,10,10,0.99); }
+
+.nav-brand {
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none;
+}
+.nav-logo-text {
+  font-family: var(--font-display);
+  font-size: 26px; font-weight: 900;
+  color: var(--white);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+.nav-logo-text span { color: var(--red); }
+
+.nav-links {
+  display: flex; gap: 8px; list-style: none;
+}
+.nav-links a {
+  color: rgba(255,255,255,0.78);
+  text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  letter-spacing: 0.5px;
+  padding: 8px 18px; border-radius: 6px;
+  transition: var(--transition);
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: 0; left: 50%; right: 50%;
+  height: 2px; background: var(--red);
+  transition: var(--transition);
+}
+.nav-links a:hover { color: var(--white); background: rgba(204,0,0,0.12); }
+.nav-links a:hover::after, .nav-links a.active::after { left: 16px; right: 16px; }
+.nav-links a.active { color: var(--white); }
+
+
+.hero {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0D0D0D 0%, #1a0000 40%, #2d0000 70%, #0D0D0D 100%);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  padding-top: 70px;
+}
+.hero-bg-pattern {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(204,0,0,0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(204,0,0,0.10) 0%, transparent 40%);
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(204,0,0,0.04) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(204,0,0,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-content {
+  position: relative; z-index: 1;
+  text-align: center; padding: 40px 24px;
+  max-width: 800px;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(204,0,0,0.2);
+  border: 1px solid rgba(204,0,0,0.5);
+  color: #FF7070; font-size: 12px; font-weight: 600;
+  letter-spacing: 3px; text-transform: uppercase;
+  padding: 6px 20px; border-radius: 20px;
+  margin-bottom: 28px;
+  animation: fadeDown 0.8s ease both;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 8vw, 96px);
+  font-weight: 900; color: var(--white);
+  line-height: 1.0;
+  letter-spacing: -2px;
+  margin-bottom: 8px;
+  animation: fadeUp 0.9s ease 0.1s both;
+}
+.hero-title .accent { color: var(--red); display: block; }
+.hero-subtitle {
+  color: rgba(255,255,255,0.55);
+  font-size: 16px; letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  animation: fadeUp 0.9s ease 0.2s both;
+}
+.hero-desc {
+  color: rgba(255,255,255,0.7);
+  font-size: 18px; max-width: 520px; margin: 0 auto 48px;
+  animation: fadeUp 0.9s ease 0.3s both;
+}
+.hero-cta-group {
+  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+  animation: fadeUp 0.9s ease 0.4s both;
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; border-radius: 8px;
+  font-family: var(--font-body); font-size: 15px; font-weight: 600;
+  letter-spacing: 0.3px; cursor: pointer;
+  text-decoration: none; border: 2px solid transparent;
+  transition: var(--transition);
+}
+.btn-primary {
+  background: var(--red); color: var(--white); border-color: var(--red);
+}
+.btn-primary:hover {
+  background: var(--red-light); border-color: var(--red-light);
+  transform: translateY(-2px); box-shadow: 0 8px 24px rgba(204,0,0,0.4);
+}
+.btn-outline {
+  background: transparent; color: var(--white); border-color: rgba(255,255,255,0.4);
+}
+.btn-outline:hover {
+  border-color: var(--white); background: rgba(255,255,255,0.08);
+  transform: translateY(-2px);
+}
+.btn-red-outline {
+  background: transparent; color: var(--red); border-color: var(--red);
+}
+.btn-red-outline:hover {
+  background: var(--red); color: var(--white);
+  transform: translateY(-2px); box-shadow: 0 6px 20px rgba(204,0,0,0.35);
+}
+
+
+.section { padding: 96px 48px; }
+.section-alt { background: var(--gray-100); }
+.section-dark { background: var(--charcoal); color: var(--white); }
+
+.section-header { text-align: center; margin-bottom: 64px; }
+.section-tag {
+  display: inline-block;
+  color: var(--red); font-size: 12px; font-weight: 600;
+  letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 700; line-height: 1.15;
+  color: inherit;
+  margin-bottom: 16px;
+}
+.section-title .red { color: var(--red); }
+.section-desc { color: var(--gray-400); font-size: 17px; max-width: 540px; margin: 0 auto; }
+.section-dark .section-desc { color: rgba(255,255,255,0.5); }
+
+
+.product-filter {
+  display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+  margin-bottom: 40px;
+}
+.filter-btn {
+  padding: 8px 22px; border-radius: 24px; border: 2px solid #ddd;
+  background: transparent; color: var(--gray-700);
+  font-family: var(--font-body); font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: var(--transition);
+}
+.filter-btn:hover, .filter-btn.active {
+  background: var(--red); border-color: var(--red); color: var(--white);
+}
+
+.table-wrapper {
+  width: 100%; overflow-x: auto;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.product-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 14px;
+  background: var(--white);
+}
+.product-table thead tr {
+  background: linear-gradient(135deg, var(--red-dark), var(--red));
+}
+.product-table th {
+  color: var(--white); font-weight: 600;
+  padding: 18px 20px; text-align: left;
+  font-size: 13px; letter-spacing: 0.5px; text-transform: uppercase;
+  white-space: nowrap;
+}
+.product-table th:first-child { border-radius: 12px 0 0 0; }
+.product-table th:last-child  { border-radius: 0 12px 0 0; }
+
+.product-table tbody tr {
+  border-bottom: 1px solid #eee;
+  transition: var(--transition);
+  cursor: pointer;
+}
+.product-table tbody tr:hover {
+  background: rgba(204,0,0,0.04);
+  transform: scale(1.005);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.product-table tbody tr.selected {
+  background: rgba(204,0,0,0.08);
+  border-left: 4px solid var(--red);
+}
+.product-table td { padding: 16px 20px; vertical-align: middle; }
+
+.product-img-cell { width: 90px; }
+.product-img-cell img {
+  width: 80px; height: 80px; object-fit: contain;
+  border-radius: 8px; background: var(--gray-100);
+  padding: 6px; display: block;
+  transition: var(--transition);
+}
+.product-table tbody tr:hover .product-img-cell img { transform: scale(1.1); }
+
+.product-name { font-weight: 600; color: var(--black); font-size: 15px; }
+.product-cat {
+  display: inline-block;
+  background: rgba(204,0,0,0.1); color: var(--red);
+  font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+  padding: 3px 10px; border-radius: 12px;
+  margin-top: 4px;
+}
+.product-desc { color: var(--gray-400); font-size: 13px; max-width: 280px; line-height: 1.5; }
+.product-price { font-weight: 700; color: var(--red); font-size: 16px; white-space: nowrap; }
+.product-price-sub { color: var(--gray-400); font-size: 12px; margin-top: 2px; }
+
+.detail-btn {
+  background: var(--red); color: var(--white);
+  border: none; border-radius: 6px;
+  padding: 8px 16px; font-size: 13px; font-weight: 600;
+  cursor: pointer; white-space: nowrap;
+  transition: var(--transition);
+  font-family: var(--font-body);
+}
+.detail-btn:hover {
+  background: var(--red-dark); transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(204,0,0,0.4);
+}
+
+
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(0,0,0,0.75); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px; opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.modal {
+  background: var(--white); border-radius: 16px;
+  max-width: 640px; width: 100%;
+  max-height: 88vh; overflow-y: auto;
+  transform: scale(0.9) translateY(20px);
+  transition: var(--transition);
+  box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+}
+.modal-overlay.open .modal { transform: scale(1) translateY(0); }
+
+.modal-header {
+  background: linear-gradient(135deg, var(--red-dark), var(--red));
+  color: var(--white); padding: 28px 32px;
+  border-radius: 16px 16px 0 0;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.modal-header h3 { font-family: var(--font-display); font-size: 22px; }
+.modal-close {
+  background: rgba(255,255,255,0.2); border: none;
+  color: white; width: 36px; height: 36px; border-radius: 50%;
+  font-size: 18px; cursor: pointer; transition: var(--transition);
+  display: flex; align-items: center; justify-content: center;
+}
+.modal-close:hover { background: rgba(255,255,255,0.35); transform: rotate(90deg); }
+
+.modal-body { padding: 32px; }
+.modal-img {
+  width: 100%; height: 220px; object-fit: contain;
+  background: var(--gray-100); border-radius: 10px;
+  margin-bottom: 24px; padding: 20px;
+}
+.modal-price {
+  font-size: 28px; font-weight: 700; color: var(--red);
+  margin-bottom: 16px;
+}
+.modal-desc { color: var(--gray-700); margin-bottom: 24px; line-height: 1.7; }
+.modal-specs { list-style: none; }
+.modal-specs li {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 0; border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+}
+.modal-specs li:last-child { border-bottom: none; }
+.modal-specs li::before {
+  content: '✓'; color: var(--red); font-weight: 700;
+  flex-shrink: 0; margin-top: 1px;
+}
+.modal-footer { padding: 20px 32px; border-top: 1px solid #eee; display: flex; gap: 12px; }
+
+
+.form-section { max-width: 780px; margin: 0 auto; }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.form-grid.full { grid-template-columns: 1fr; }
+@media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }
+
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-group.span-2 { grid-column: span 2; }
+@media (max-width: 640px) { .form-group.span-2 { grid-column: span 1; } }
+
+.form-label {
+  font-size: 13px; font-weight: 600; color: var(--gray-700);
+  letter-spacing: 0.3px; text-transform: uppercase;
+}
+.form-label .required { color: var(--red); margin-left: 4px; }
+
+.form-input, .form-select, .form-textarea {
+  width: 100%; padding: 13px 16px;
+  border: 2px solid #e0e0e0; border-radius: 8px;
+  font-family: var(--font-body); font-size: 15px; color: var(--black);
+  background: var(--white); transition: var(--transition);
+  outline: none; appearance: none;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--red); box-shadow: 0 0 0 4px rgba(204,0,0,0.1);
+}
+.form-input.error, .form-select.error, .form-textarea.error {
+  border-color: #e74c3c; background: #fff5f5;
+}
+.form-textarea { resize: vertical; min-height: 100px; }
+
+.form-error { color: #e74c3c; font-size: 12px; font-weight: 500; display: none; }
+.form-error.show { display: block; }
+
+.payment-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+@media (max-width: 480px) { .payment-options { grid-template-columns: 1fr 1fr; } }
+.payment-opt { position: relative; }
+.payment-opt input[type=radio] { position: absolute; opacity: 0; width: 0; height: 0; }
+.payment-label {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 8px; padding: 16px 12px;
+  border: 2px solid #e0e0e0; border-radius: 10px;
+  cursor: pointer; transition: var(--transition);
+  text-align: center; font-size: 13px; font-weight: 500; color: var(--gray-700);
+}
+.payment-icon { font-size: 24px; }
+.payment-opt input[type=radio]:checked + .payment-label {
+  border-color: var(--red); background: rgba(204,0,0,0.06); color: var(--red);
+}
+.payment-label:hover { border-color: var(--red); }
+
+.price-summary {
+  background: linear-gradient(135deg, var(--black), var(--charcoal));
+  color: var(--white); border-radius: 12px; padding: 28px;
+  margin-top: 28px;
+}
+.price-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; }
+.price-row + .price-row { border-top: 1px solid rgba(255,255,255,0.1); }
+.price-row.total {
+  border-top: 2px solid var(--red) !important;
+  margin-top: 8px; padding-top: 16px;
+  font-size: 22px; font-weight: 700;
+}
+.price-row.total .red { color: var(--red-light); }
+
+.order-summary {
+  background: var(--white); border: 2px solid var(--red);
+  border-radius: 12px; padding: 28px;
+  display: none; margin-top: 24px;
+}
+.order-summary.show { display: block; }
+.order-summary h3 {
+  font-family: var(--font-display); color: var(--red);
+  margin-bottom: 20px; font-size: 22px;
+}
+.summary-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
+.summary-item:last-child { border-bottom: none; }
+.summary-label { color: var(--gray-400); font-weight: 500; }
+.summary-value { font-weight: 600; color: var(--black); }
+
+
+.contact-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+  max-width: 1000px; margin: 0 auto;
+  align-items: start;
+}
+@media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+
+.contact-info-card {
+  background: var(--white); border-radius: 16px;
+  padding: 40px; box-shadow: var(--shadow);
+}
+.contact-item {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 20px 0; border-bottom: 1px solid #f0f0f0;
+}
+.contact-item:last-child { border-bottom: none; }
+.contact-icon {
+  width: 48px; height: 48px; background: rgba(204,0,0,0.1);
+  border-radius: 10px; display: flex; align-items: center;
+  justify-content: center; font-size: 22px; flex-shrink: 0;
+}
+.contact-text h4 { font-weight: 600; color: var(--black); margin-bottom: 4px; }
+.contact-text p, .contact-text a { color: var(--gray-400); font-size: 15px; }
+.contact-text a { text-decoration: none; transition: var(--transition); }
+.contact-text a:hover { color: var(--red); }
+
+.social-links { display: flex; gap: 12px; margin-top: 8px; }
+.social-link {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 18px; border-radius: 8px; text-decoration: none;
+  font-size: 14px; font-weight: 600; transition: var(--transition);
+  border: 2px solid;
+}
+.social-link.ig { color: #E1306C; border-color: #E1306C; }
+.social-link.ig:hover { background: #E1306C; color: white; }
+.social-link.fb { color: #1877F2; border-color: #1877F2; }
+.social-link.fb:hover { background: #1877F2; color: white; }
+.social-link.yt { color: #FF0000; border-color: #FF0000; }
+.social-link.yt:hover { background: #FF0000; color: white; }
+.social-link.tw { color: #1DA1F2; border-color: #1DA1F2; }
+.social-link.tw:hover { background: #1DA1F2; color: white; }
+
+.map-placeholder {
+  background: linear-gradient(135deg, #1a0000 0%, #2d0000 100%);
+  border-radius: 16px; padding: 40px;
+  color: white; text-align: center;
+  min-height: 360px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 16px;
+  box-shadow: var(--shadow);
+}
+.map-icon { font-size: 56px; }
+.map-placeholder h3 { font-family: var(--font-display); font-size: 24px; }
+.map-placeholder p { color: rgba(255,255,255,0.6); font-size: 15px; }
+
+
+.footer {
+  background: var(--black);
+  border-top: 3px solid var(--red);
+  color: rgba(255,255,255,0.6);
+  padding: 64px 48px 32px;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px; margin-bottom: 48px;
+}
+@media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .footer-grid { grid-template-columns: 1fr; } }
+
+.footer-brand { }
+.footer-brand-name {
+  font-family: var(--font-display); font-size: 28px; font-weight: 900;
+  color: var(--white); letter-spacing: 3px; margin-bottom: 12px;
+}
+.footer-brand-name span { color: var(--red); }
+.footer-desc { font-size: 14px; line-height: 1.7; max-width: 280px; }
+.footer-col h4 { color: var(--white); font-weight: 600; margin-bottom: 16px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 10px; }
+.footer-col ul li a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 14px; transition: var(--transition); }
+.footer-col ul li a:hover { color: var(--red); padding-left: 6px; }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 24px; display: flex;
+  justify-content: space-between; align-items: center;
+  font-size: 13px; flex-wrap: wrap; gap: 12px;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+
+.page { display: none; }
+.page.active { display: block; }
+
+
+.toast {
+  position: fixed; bottom: 32px; right: 32px; z-index: 3000;
+  background: var(--charcoal); color: var(--white);
+  padding: 16px 24px; border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  border-left: 4px solid var(--red);
+  font-size: 14px; font-weight: 500;
+  transform: translateX(120%);
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  max-width: 340px;
+}
+.toast.show { transform: translateX(0); }
+
+
+.stats-row {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  background: var(--red);
+  border-radius: var(--radius);
+  overflow: hidden; margin-top: -2px;
+}
+@media (max-width: 640px) { .stats-row { grid-template-columns: 1fr 1fr; } }
+.stat-item {
+  padding: 40px 24px; text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.2);
+  color: white;
+}
+.stat-item:last-child { border-right: none; }
+.stat-num { font-family: var(--font-display); font-size: 42px; font-weight: 900; line-height: 1; margin-bottom: 8px; }
+.stat-label { font-size: 13px; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
+
+
+.marquee-bar {
+  background: var(--red);
+  color: white; font-size: 13px; font-weight: 500;
+  letter-spacing: 1px; padding: 8px 0; text-align: center;
+  overflow: hidden; white-space: nowrap;
+}
+.marquee-inner {
+  display: inline-block;
+  animation: marquee 25s linear infinite;
+}
+@keyframes marquee {
+  from { transform: translateX(100vw); }
+  to   { transform: translateX(-100%); }
+}
+
+@media (max-width: 900px) {
+  .navbar { padding: 0 20px; }
+  .section { padding: 64px 20px; }
+  .footer { padding: 48px 20px 24px; }
+}
+
+    
+    .hero-scroll-hint {
+      position: absolute; bottom: 36px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.4); font-size: 11px; letter-spacing: 2px;
+      text-transform: uppercase; animation: fadeUp 1s ease 0.8s both;
+    }
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--red), transparent);
+      animation: scrollLine 1.5s ease infinite;
+    }
+    @keyframes scrollLine {
+      0%   { transform: scaleY(0); transform-origin: top; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      51%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+    .product-table tbody tr td:nth-child(1) { color: var(--gray-400); font-weight: 600; font-size: 13px; }
+    .selected-row-indicator {
+      position: fixed; bottom: 80px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--red); color: white;
+      padding: 12px 28px; border-radius: 32px;
+      font-size: 14px; font-weight: 600;
+      box-shadow: 0 8px 28px rgba(204,0,0,0.5);
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      z-index: 900; pointer-events: none;
+    }
+    .selected-row-indicator.show {
+      transform: translateX(-50%) translateY(0);
+    }
+    .no-results {
+      text-align: center; padding: 60px; color: var(--gray-400);
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+
+<div class="marquee-bar">
+  <span class="marquee-inner">
+    ✦ FREE ONGKIR SE-INDONESIA untuk pembelian di atas Rp 500.000 &nbsp;&nbsp;
+    ✦ Garansi Resmi Canon Indonesia 1–2 Tahun &nbsp;&nbsp;
+    ✦ Cicilan 0% hingga 24 bulan &nbsp;&nbsp;
+    ✦ Tersedia di seluruh Canon Official Store &nbsp;&nbsp;
+    ✦ Hubungi kami: 0800-1-CANON (22666) &nbsp;&nbsp;
+  </span>
+</div>
+
+
+<nav class="navbar" id="navbar">
+  <a href="#" class="nav-brand" onclick="showPage('home')">
+    <div class="nav-logo-text" style="text-shadow: 0 0 20px rgba(204,0,0,0.4);">
+      <span>C</span>ANON
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" class="active" id="nav-home" onclick="showPage('home'); setActive(this)">Beranda</a></li>
+    <li><a href="#" id="nav-produk" onclick="showPage('produk'); setActive(this)">Produk</a></li>
+    <li><a href="#" id="nav-pesan" onclick="showPage('pesan'); setActive(this)">Pemesanan</a></li>
+    <li><a href="#" id="nav-kontak" onclick="showPage('kontak'); setActive(this)">Kontak</a></li>
+  </ul>
+</nav>
+
+
+<div id="page-home" class="page active">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-badge">✦ Capture Inspired ✦</div>
+      <h1 class="hero-title">
+        CANON
+        <span class="accent">Indonesia</span>
+      </h1>
+      <p class="hero-subtitle">Kamera · Printer · Lensa · Aksesori</p>
+      <p class="hero-desc">
+        Teknologi imaging terdepan dunia, kini hadir untuk Anda.
+        Abadikan setiap momen dengan kejernihan dan presisi sempurna.
+      </p>
+      <div class="hero-cta-group">
+        <a href="#" class="btn btn-primary" onclick="showPage('produk'); setActive(document.getElementById('nav-produk'))">
+          🛒 Lihat Produk
+        </a>
+        <a href="#" class="btn btn-outline" onclick="showPage('pesan'); setActive(document.getElementById('nav-pesan'))">
+          📋 Pesan Sekarang
+        </a>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <div class="scroll-line"></div>
+      Scroll
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats-row fade-in">
+    <div class="stat-item">
+      <div class="stat-num">85+</div>
+      <div class="stat-label">Tahun Inovasi</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">200+</div>
+      <div class="stat-label">Produk Tersedia</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">500K+</div>
+      <div class="stat-label">Pelanggan Puas</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">50+</div>
+      <div class="stat-label">Service Center</div>
+    </div>
+  </div>
+
+  
+  <section class="section fade-in">
+    <div class="section-header">
+      <div class="section-tag">Tentang Kami</div>
+      <h2 class="section-title">Lebih dari sekadar <span class="red">kamera</span></h2>
+      <p class="section-desc">
+        Canon adalah pemimpin dunia dalam teknologi imaging digital. Dari kamera DSLR profesional
+        hingga printer foto berkualitas tinggi, kami hadir untuk setiap kebutuhan visual Anda.
+      </p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:32px; max-width:960px; margin:0 auto;" class="feature-cards">
+      <div style="background:#fff; border-radius:16px; padding:32px; box-shadow:0 4px 24px rgba(0,0,0,0.08); text-align:center; transition:all 0.3s;" onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 12px 40px rgba(204,0,0,0.15)'" onmouseout="this.style.transform=''; this.style.boxShadow='0 4px 24px rgba(0,0,0,0.08)'">
+        <div style="font-size:48px; margin-bottom:16px;">📸</div>
+        <h3 style="font-family:var(--font-display); font-size:20px; margin-bottom:10px;">Kamera DSLR</h3>
+        <p style="color:var(--gray-400); font-size:14px; line-height:1.6;">Sistem EOS profesional dengan autofokus tercepat dan kualitas gambar luar biasa.</p>
+      </div>
+      <div style="background:#fff; border-radius:16px; padding:32px; box-shadow:0 4px 24px rgba(0,0,0,0.08); text-align:center; transition:all 0.3s;" onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 12px 40px rgba(204,0,0,0.15)'" onmouseout="this.style.transform=''; this.style.boxShadow='0 4px 24px rgba(0,0,0,0.08)'">
+        <div style="font-size:48px; margin-bottom:16px;">🖨️</div>
+        <h3 style="font-family:var(--font-display); font-size:20px; margin-bottom:10px;">Printer Canon</h3>
+        <p style="color:var(--gray-400); font-size:14px; line-height:1.6;">Teknologi PIXMA dan SELPHY untuk cetakan foto dan dokumen berkualitas profesional.</p>
+      </div>
+      <div style="background:#fff; border-radius:16px; padding:32px; box-shadow:0 4px 24px rgba(0,0,0,0.08); text-align:center; transition:all 0.3s;" onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 12px 40px rgba(204,0,0,0.15)'" onmouseout="this.style.transform=''; this.style.boxShadow='0 4px 24px rgba(0,0,0,0.08)'">
+        <div style="font-size:48px; margin-bottom:16px;">🔍</div>
+        <h3 style="font-family:var(--font-display); font-size:20px; margin-bottom:10px;">Kamera Saku</h3>
+        <p style="color:var(--gray-400); font-size:14px; line-height:1.6;">PowerShot series — kamera compact yang powerful untuk konten kreator dan vlogger.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div id="page-produk" class="page">
+  <div style="padding-top:70px;"></div>
+  <section class="section">
+    <div class="section-header fade-in">
+      <div class="section-tag">Katalog Resmi</div>
+      <h2 class="section-title">Daftar Produk <span class="red">Canon</span></h2>
+      <p class="section-desc">Klik pada baris produk atau tombol "Detail" untuk melihat informasi lengkap.</p>
+    </div>
+
+    
+    <div class="product-filter fade-in">
+      <button class="filter-btn active" onclick="filterProducts('all', this)">Semua Produk</button>
+      <button class="filter-btn" onclick="filterProducts('DSLR', this)">📸 DSLR</button>
+      <button class="filter-btn" onclick="filterProducts('Mirrorless', this)">🎥 Mirrorless</button>
+      <button class="filter-btn" onclick="filterProducts('Compact', this)">📷 Kamera Saku</button>
+      <button class="filter-btn" onclick="filterProducts('Printer', this)">🖨️ Printer</button>
+    </div>
+
+    <div class="table-wrapper fade-in">
+      <table class="product-table" id="productTable">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Gambar</th>
+            <th>Nama Produk</th>
+            <th>Kategori</th>
+            <th>Deskripsi Singkat</th>
+            <th>Harga</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="productTableBody">
+          
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div><!-- end page-produk -->
+
+
+
+<div id="page-pesan" class="page">
+  <div style="padding-top:70px;"></div>
+  <section class="section">
+    <div class="section-header fade-in">
+      <div class="section-tag">Beli Sekarang</div>
+      <h2 class="section-title">Formulir <span class="red">Pemesanan</span></h2>
+      <p class="section-desc">Isi data di bawah ini untuk memesan produk Canon pilihan Anda.</p>
+    </div>
+
+    <div class="form-section fade-in">
+      <form id="orderForm" onsubmit="submitOrder(event)">
+
+        <div class="form-grid">
+          
+          <div class="form-group">
+            <label class="form-label" for="buyerName">Nama Lengkap <span class="required">*</span></label>
+            <input class="form-input" type="text" id="buyerName" placeholder="Masukkan nama lengkap Anda" oninput="clearError('buyerName')">
+            <span class="form-error" id="err-buyerName">❌ Nama tidak boleh kosong</span>
+          </div>
+
+         
+          <div class="form-group">
+            <label class="form-label" for="phoneNum">Nomor HP / WhatsApp <span class="required">*</span></label>
+            <input class="form-input" type="tel" id="phoneNum" placeholder="08xxxxxxxxxx" oninput="clearError('phoneNum')">
+            <span class="form-error" id="err-phoneNum">❌ Nomor HP tidak boleh kosong</span>
+          </div>
+
+         
+          <div class="form-group">
+            <label class="form-label" for="emailAddr">Email</label>
+            <input class="form-input" type="email" id="emailAddr" placeholder="contoh@email.com">
+          </div>
+
+          
+          <div class="form-group">
+            <label class="form-label" for="cityField">Kota <span class="required">*</span></label>
+            <input class="form-input" type="text" id="cityField" placeholder="Nama kota Anda" oninput="clearError('cityField')">
+            <span class="form-error" id="err-cityField">❌ Kota tidak boleh kosong</span>
+          </div>
+
+          <div class="form-group span-2">
+            <label class="form-label" for="addressField">Alamat Lengkap <span class="required">*</span></label>
+            <textarea class="form-textarea" id="addressField" placeholder="Jalan, nomor rumah, RT/RW, kelurahan, kecamatan..." oninput="clearError('addressField')"></textarea>
+            <span class="form-error" id="err-addressField">❌ Alamat tidak boleh kosong</span>
+          </div>
+
+          
+          <div class="form-group">
+            <label class="form-label" for="productSelect">Pilih Produk <span class="required">*</span></label>
+            <select class="form-select" id="productSelect" onchange="updatePrice(); clearError('productSelect')">
+              <option value="">-- Pilih Produk --</option>
+            </select>
+            <span class="form-error" id="err-productSelect">❌ Silakan pilih produk</span>
+          </div>
+
+         
+          <div class="form-group">
+            <label class="form-label" for="qtyField">Jumlah <span class="required">*</span></label>
+            <input class="form-input" type="number" id="qtyField" value="1" min="1" max="99" oninput="updatePrice(); clearError('qtyField')">
+            <span class="form-error" id="err-qtyField">❌ Jumlah harus lebih dari 0</span>
+          </div>
+ 
+          <div class="form-group span-2">
+            <label class="form-label" for="noteField">Catatan Tambahan</label>
+            <textarea class="form-textarea" id="noteField" placeholder="Warna, aksesori tambahan, permintaan khusus..."></textarea>
+          </div>
+        </div>
+
+        
+        <div class="form-group" style="margin-top:28px;">
+          <label class="form-label">Metode Pembayaran <span class="required">*</span></label>
+          <span class="form-error" id="err-payment">❌ Pilih metode pembayaran</span>
+          <div class="payment-options" style="margin-top:12px;">
+            <div class="payment-opt">
+              <input type="radio" name="payment" id="pay-transfer" value="Transfer Bank" onchange="clearError('payment')">
+              <label class="payment-label" for="pay-transfer">
+                <span class="payment-icon">🏦</span>
+                Transfer Bank
+              </label>
+            </div>
+            <div class="payment-opt">
+              <input type="radio" name="payment" id="pay-cod" value="COD" onchange="clearError('payment')">
+              <label class="payment-label" for="pay-cod">
+                <span class="payment-icon">🚚</span>
+                COD
+              </label>
+            </div>
+            <div class="payment-opt">
+              <input type="radio" name="payment" id="pay-qris" value="QRIS" onchange="clearError('payment')">
+              <label class="payment-label" for="pay-qris">
+                <span class="payment-icon">📱</span>
+                QRIS
+              </label>
+            </div>
+            <div class="payment-opt">
+              <input type="radio" name="payment" id="pay-cc" value="Kartu Kredit" onchange="clearError('payment')">
+              <label class="payment-label" for="pay-cc">
+                <span class="payment-icon">💳</span>
+                Kartu Kredit
+              </label>
+            </div>
+            <div class="payment-opt">
+              <input type="radio" name="payment" id="pay-ew" value="E-Wallet" onchange="clearError('payment')">
+              <label class="payment-label" for="pay-ew">
+                <span class="payment-icon">👜</span>
+                E-Wallet
+              </label>
+            </div>
+            <div class="payment-opt">
+              <input type="radio" name="payment" id="pay-cicil" value="Cicilan 0%" onchange="clearError('payment')">
+              <label class="payment-label" for="pay-cicil">
+                <span class="payment-icon">📅</span>
+                Cicilan 0%
+              </label>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="price-summary" id="priceSummary" style="display:none;">
+          <div class="price-row">
+            <span style="color:rgba(255,255,255,0.6)">Harga Satuan</span>
+            <span id="unitPrice" style="font-weight:600;">—</span>
+          </div>
+          <div class="price-row">
+            <span style="color:rgba(255,255,255,0.6)">Jumlah</span>
+            <span id="qtyDisplay">—</span>
+          </div>
+          <div class="price-row">
+            <span style="color:rgba(255,255,255,0.6)">Subtotal</span>
+            <span id="subtotalPrice">—</span>
+          </div>
+          <div class="price-row">
+            <span style="color:rgba(255,255,255,0.6)">Ongkos Kirim</span>
+            <span style="color:#4CAF50;">Gratis ✓</span>
+          </div>
+          <div class="price-row total">
+            <span>TOTAL BAYAR</span>
+            <span class="red" id="totalPrice">—</span>
+          </div>
+        </div>
+
+        
+        <div style="display:flex; gap:16px; margin-top:32px; flex-wrap:wrap;">
+          <button type="button" class="btn btn-red-outline" onclick="previewOrder()">👁 Pratinjau Pesanan</button>
+          <button type="submit" class="btn btn-primary">✅ Kirim Pesanan</button>
+          <button type="button" class="btn btn-outline" style="background:#f5f5f5;color:#666;border-color:#ddd;" onclick="resetForm()">🔄 Reset Form</button>
+        </div>
+
+      </form>
+
+      
+      <div class="order-summary" id="orderSummary">
+        <h3>📋 Ringkasan Pesanan</h3>
+        <div id="summaryContent"></div>
+        <div style="margin-top:20px; display:flex; gap:12px; flex-wrap:wrap;">
+          <button class="btn btn-primary" onclick="submitOrder(null, true)">✅ Konfirmasi & Kirim</button>
+          <button class="btn btn-red-outline" onclick="closeSummary()">✏️ Edit Pesanan</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<div id="page-kontak" class="page">
+  <div style="padding-top:70px;"></div>
+  <section class="section">
+    <div class="section-header fade-in">
+      <div class="section-tag">Hubungi Kami</div>
+      <h2 class="section-title">Informasi <span class="red">Kontak</span></h2>
+      <p class="section-desc">Kami siap membantu Anda. Jangan ragu untuk menghubungi tim Canon Indonesia.</p>
+    </div>
+
+    <div class="contact-grid">
+      
+      <div class="contact-info-card fade-in">
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-text">
+            <h4>Alamat Kantor Pusat</h4>
+            <p>Gedung Nusantara, Jl. TB Simatupang No. 88<br>Jakarta Selatan, DKI Jakarta 12560</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div class="contact-text">
+            <h4>Telepon & Hotline</h4>
+            <a href="tel:08001226660">0800-1-CANON (22666) — Bebas Pulsa</a><br>
+            <a href="tel:+622150993000">+62 21 5099-3000 (Bisnis)</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div class="contact-text">
+            <h4>Email</h4>
+            <a href="mailto:info@canon.co.id">info@canon.co.id</a><br>
+            <a href="mailto:support@canon.co.id">support@canon.co.id (Support Teknis)</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div class="contact-text">
+            <h4>Jam Operasional</h4>
+            <p>Senin – Jumat: 08.00 – 17.00 WIB<br>Sabtu: 09.00 – 14.00 WIB</p>
+          </div>
+        </div>
+
+        
+        <div style="margin-top:24px;">
+          <h4 style="font-weight:600; margin-bottom:14px; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--gray-700)">Ikuti Kami</h4>
+          <div class="social-links" style="flex-wrap:wrap;">
+            <a href="https://instagram.com/canonindonesia" target="_blank" class="social-link ig">📸 Instagram</a>
+            <a href="https://facebook.com/canonindonesia" target="_blank" class="social-link fb">👍 Facebook</a>
+            <a href="https://youtube.com/canonindonesia" target="_blank" class="social-link yt">▶ YouTube</a>
+            <a href="https://twitter.com/canonindonesia" target="_blank" class="social-link tw">🐦 Twitter / X</a>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="fade-in">
+        <div class="map-placeholder">
+          <div class="map-icon">🗺️</div>
+          <h3>Canon Official Store</h3>
+          <p>Temukan toko resmi Canon Indonesia di kota Anda</p>
+          <a href="https://www.canon.co.id/storefinder" target="_blank" class="btn btn-primary" style="margin-top:8px;">🔍 Cari Toko Terdekat</a>
+        </div>
+
+
+        <div style="background:#fff; border-radius:16px; padding:28px; box-shadow:var(--shadow); margin-top:24px;">
+          <h4 style="font-family:var(--font-display); font-size:18px; margin-bottom:16px;">🔗 Tautan Berguna</h4>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:10px;">
+            <li><a href="https://www.canon.co.id" target="_blank" style="color:var(--red); text-decoration:none; font-weight:500; font-size:14px; display:flex; align-items:center; gap:8px;">🌐 Website Resmi Canon Indonesia</a></li>
+            <li><a href="https://www.canon.co.id/support" target="_blank" style="color:var(--red); text-decoration:none; font-weight:500; font-size:14px; display:flex; align-items:center; gap:8px;">🛠️ Pusat Dukungan & Garansi</a></li>
+            <li><a href="https://www.canon.co.id/download" target="_blank" style="color:var(--red); text-decoration:none; font-weight:500; font-size:14px; display:flex; align-items:center; gap:8px;">⬇️ Unduh Driver & Software</a></li>
+            <li><a href="mailto:info@canon.co.id" style="color:var(--red); text-decoration:none; font-weight:500; font-size:14px; display:flex; align-items:center; gap:8px;">📧 Kirim Email ke Kami</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-brand-name"><span>C</span>ANON</div>
+      <p class="footer-desc">
+        Canon Inc. didirikan tahun 1937 di Jepang. Selama lebih dari 85 tahun,
+        kami berdedikasi menghadirkan teknologi imaging terbaik dunia ke seluruh penjuru globe.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>Produk</h4>
+      <ul>
+        <li><a href="#" onclick="showPage('produk'); setActive(document.getElementById('nav-produk'))">Kamera DSLR</a></li>
+        <li><a href="#" onclick="showPage('produk'); setActive(document.getElementById('nav-produk'))">Kamera Mirrorless</a></li>
+        <li><a href="#" onclick="showPage('produk'); setActive(document.getElementById('nav-produk'))">Kamera Saku</a></li>
+        <li><a href="#" onclick="showPage('produk'); setActive(document.getElementById('nav-produk'))">Printer Inkjet</a></li>
+        <li><a href="#" onclick="showPage('produk'); setActive(document.getElementById('nav-produk'))">Printer Foto</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Layanan</h4>
+      <ul>
+        <li><a href="#">Garansi Resmi</a></li>
+        <li><a href="#">Service Center</a></li>
+        <li><a href="#">Cicilan 0%</a></li>
+        <li><a href="#">Trade-in Kamera</a></li>
+        <li><a href="#">Workshop Canon</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Navigasi</h4>
+      <ul>
+        <li><a href="#" onclick="showPage('home'); setActive(document.getElementById('nav-home'))">Beranda</a></li>
+        <li><a href="#" onclick="showPage('produk'); setActive(document.getElementById('nav-produk'))">Produk</a></li>
+        <li><a href="#" onclick="showPage('pesan'); setActive(document.getElementById('nav-pesan'))">Pemesanan</a></li>
+        <li><a href="#" onclick="showPage('kontak'); setActive(document.getElementById('nav-kontak'))">Kontak</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Canon Indonesia. All rights reserved.</span>
+    <span>Dibuat dengan ❤️ untuk para fotografer Indonesia</span>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="productModal">
+    <div class="modal-header">
+      <h3 id="modalTitle">Detail Produk</h3>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body">
+      <img id="modalImg" src="" alt="" class="modal-img">
+      <div id="modalPrice" class="modal-price"></div>
+      <p id="modalDesc" class="modal-desc"></p>
+      <ul class="modal-specs" id="modalSpecs"></ul>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" id="modalOrderBtn" onclick="goToOrder()">🛒 Pesan Produk Ini</button>
+      <button class="btn btn-red-outline" onclick="closeModalDirect()">Tutup</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="selected-row-indicator" id="rowIndicator">✓ Produk dipilih</div>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+ 
+  const products = [
+    {
+      id: 1, no: 1,
+      category: "DSLR",
+      name: "Canon EOS 5D Mark IV Body Only",
+      price: 46999000,
+      priceDisplay: "Rp 46.999.000",
+      img: "../image/gambar1.jpg",
+      desc: "Kamera DSLR full-frame flagship untuk fotografer profesional.",
+      longDesc: "Canon EOS 5D Mark IV adalah kamera full-frame 30.4 megapiksel yang dirancang untuk fotografer profesional. Dilengkapi prosesor DIGIC 6+, sistem AF 61-titik, dan kemampuan video 4K.",
+      specs: [
+        "30.4 MP Full-Frame CMOS Sensor",
+        "DIGIC 6+ Image Processor",
+        "61-Point All-Cross-Type AF System",
+        "4K Video Recording",
+        "ISO 100–32000 (expandable to 102400)",
+        "7fps Continuous Shooting",
+        "Dual Pixel RAW",
+        "Weather & Dust Sealed"
+      ]
+    },
+    {
+      id: 2, no: 2,
+      category: "DSLR",
+      name: "Canon EOS 3000D Kit 18-55mm",
+      price: 5969005,
+      priceDisplay: "Rp 5.969.005",
+      img: "../image/gambar2.jpg",
+      desc: "DSLR entry-level terbaik untuk pemula dan pelajar fotografi.",
+      longDesc: "Canon EOS 3000D hadir sebagai pilihan DSLR entry-level yang terjangkau namun bertenaga. Ideal bagi pemula yang ingin belajar fotografi dengan kamera full-featured.",
+      specs: [
+        "18 MP APS-C CMOS Sensor",
+        "DIGIC 4+ Processor",
+        "9-Point AF System",
+        "Full HD 1080p Video",
+        "ISO 100–6400",
+        "3fps Continuous Shooting",
+        "Lensa EF-S 18-55mm III",
+        "Scene Intelligent Auto Mode"
+      ]
+    },
+    {
+      id: 3, no: 3,
+      category: "Compact",
+      name: "Canon PowerShot G7 X Mark III",
+      price: 15184800,
+      priceDisplay: "Rp 15.184.800",
+      img: "../image/gambar3.png",
+      desc: "Kamera vlog kompak terbaik dengan live streaming langsung ke YouTube.",
+      longDesc: "Canon PowerShot G7 X Mark III adalah kamera saku premium bertenaga untuk vlogger dan content creator. Dilengkapi fitur live streaming ke YouTube secara langsung.",
+      specs: [
+        "20.1 MP 1-inch CMOS Sensor",
+        "DIGIC 8 Processor",
+        "4K 30fps / Full HD 120fps",
+        "Live Streaming YouTube Built-in",
+        "Tilt LCD Touchscreen",
+        "f/1.8–2.8 Lens",
+        "ISO 125–12800",
+        "Flip-up Screen untuk Selfie"
+      ]
+    },
+    {
+      id: 4, no: 4,
+      category: "Printer",
+      name: "Canon PIXMA G2020 (Print, Scan, Copy)",
+      price: 1750000,
+      priceDisplay: "Rp 1.750.000",
+      img: "../image/gambar4.webp",
+      desc: "Printer inkjet tank 3-in-1 terjangkau dengan biaya cetak sangat rendah.",
+      longDesc: "Canon PIXMA G2020 adalah printer Ink Tank 3-in-1 yang dirancang untuk kebutuhan printing rumah dan kantor. Dengan sistem ink tank, biaya cetak per halaman menjadi sangat ekonomis.",
+      specs: [
+        "Print, Scan, Copy (3-in-1)",
+        "Print Speed: 8.8 ipm Hitam / 5 ipm Warna",
+        "Resolusi Cetak: 4800 x 1200 dpi",
+        "Ink Tank System (4 Warna)",
+        "Kapasitas Tinta: 6000 hlm Hitam / 7000 hlm Warna",
+        "Scan Resolution: 600 x 1200 dpi",
+        "Koneksi: USB",
+        "Garansi: 2 Tahun / 50.000 Halaman"
+      ]
+    },
+    {
+      id: 5, no: 5,
+      category: "Printer",
+      name: "Canon SELPHY Square QX10",
+      price: 2500000,
+      priceDisplay: "Rp 2.500.000",
+      img: "../image/printer5.webp",
+      desc: "Printer foto portabel nirkabel untuk cetak foto instan.",
+      longDesc: "Canon SELPHY Square QX10 adalah printer foto portabel yang menggunakan teknologi dye-sublimation untuk menghasilkan cetakan foto berkualitas lab dengan ukuran 68x68mm yang unik.",
+      specs: [
+        "Teknologi Dye-Sublimation",
+        "Ukuran Cetak: 68 x 68 mm (Square)",
+        "Wi-Fi + USB",
+        "Kompatibel iPhone & Android",
+        "Aplikasi Canon PRINT",
+        "Kualitas Tahan Air & Luntur",
+        "Baterai Isi Ulang Built-in",
+        "Berat: 0.56 kg (Ultra Portabel)"
+      ]
+    }
+  ];
+
+  
+  let currentFilter = 'all';
+  let selectedProductId = null;
+  let selectedRowEl = null;
+  let orderConfirmed = false;
+
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    renderTable(products);
+    populateProductSelect();
+    initScrollAnimations();
+    initNavbarScroll();
+  });
+
+  
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    setTimeout(() => {
+      document.querySelectorAll('.fade-in').forEach(el => {
+        el.classList.remove('visible');
+        el.getBoundingClientRect(); // reflow
+        el.classList.add('visible');
+      });
+    }, 50);
+  }
+
+  function setActive(el) {
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    if (el) el.classList.add('active');
+  }
+
+  function initNavbarScroll() {
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+  }
+
+  
+  function initScrollAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  }
+
+  
+  function renderTable(data) {
+    const tbody = document.getElementById('productTableBody');
+    if (!data.length) {
+      tbody.innerHTML = `<tr><td colspan="7" class="no-results">🔍 Tidak ada produk yang cocok</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = data.map((p, idx) => `
+      <tr data-id="${p.id}" onclick="selectRow(this, ${p.id})"
+          style="animation: fadeUp 0.4s ease ${idx * 0.06}s both;">
+        <td>${p.no}</td>
+        <td class="product-img-cell">
+          <img src="${p.img}" alt="${p.name}" loading="lazy">
+        </td>
+        <td>
+          <div class="product-name">${p.name}</div>
+        </td>
+        <td><span class="product-cat">${p.category}</span></td>
+        <td><div class="product-desc">${p.desc}</div></td>
+        <td>
+          <div class="product-price">${p.priceDisplay}</div>
+          <div class="product-price-sub">Harga Satuan</div>
+        </td>
+        <td>
+          <button class="detail-btn" onclick="event.stopPropagation(); openModal(${p.id})">
+            🔍 Detail
+          </button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+ 
+  function filterProducts(cat, btn) {
+    currentFilter = cat;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filtered = cat === 'all' ? products : products.filter(p => p.category === cat);
+    renderTable(filtered);
+  }
+
+  
+  function selectRow(row, id) {
+    if (selectedRowEl) selectedRowEl.classList.remove('selected');
+    row.classList.add('selected');
+    selectedRowEl = row;
+    selectedProductId = id;
+    const p = products.find(x => x.id === id);
+
+    const indicator = document.getElementById('rowIndicator');
+    indicator.textContent = `✓ ${p.name} dipilih`;
+    indicator.classList.add('show');
+    setTimeout(() => indicator.classList.remove('show'), 3000);
+  }
+
+  
+  function openModal(id) {
+    const p = products.find(x => x.id === id);
+    if (!p) return;
+    selectedProductId = id;
+
+    document.getElementById('modalTitle').textContent = p.name;
+    document.getElementById('modalImg').src = p.img;
+    document.getElementById('modalImg').alt = p.name;
+    document.getElementById('modalPrice').textContent = p.priceDisplay;
+    document.getElementById('modalDesc').textContent = p.longDesc;
+    document.getElementById('modalSpecs').innerHTML = p.specs.map(s =>
+      `<li>${s}</li>`
+    ).join('');
+
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(e) {
+    if (e && e.target !== document.getElementById('modalOverlay')) return;
+    closeModalDirect();
+  }
+
+  function closeModalDirect() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function goToOrder() {
+    closeModalDirect();
+    showPage('pesan');
+    setActive(document.getElementById('nav-pesan'));
+    if (selectedProductId) {
+      const sel = document.getElementById('productSelect');
+      sel.value = selectedProductId;
+      updatePrice();
+      sel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+     
+      sel.style.borderColor = 'var(--red)';
+      sel.style.boxShadow = '0 0 0 4px rgba(204,0,0,0.2)';
+      setTimeout(() => { sel.style.borderColor = ''; sel.style.boxShadow = ''; }, 2000);
+    }
+  }
+
+  
+  function populateProductSelect() {
+    const sel = document.getElementById('productSelect');
+    products.forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p.id;
+      opt.dataset.price = p.price;
+      opt.textContent = `${p.name} — ${p.priceDisplay}`;
+      sel.appendChild(opt);
+    });
+  }
+
+  
+  function updatePrice() {
+    const sel = document.getElementById('productSelect');
+    const qty = parseInt(document.getElementById('qtyField').value) || 0;
+    const summary = document.getElementById('priceSummary');
+
+    if (!sel.value || qty < 1) {
+      summary.style.display = 'none';
+      return;
+    }
+
+    const p = products.find(x => x.id === parseInt(sel.value));
+    if (!p) return;
+
+    const total = p.price * qty;
+    document.getElementById('unitPrice').textContent = p.priceDisplay;
+    document.getElementById('qtyDisplay').textContent = `${qty} unit`;
+    document.getElementById('subtotalPrice').textContent = formatRupiah(total);
+    document.getElementById('totalPrice').textContent = formatRupiah(total);
+
+    summary.style.display = 'block';
+    summary.style.animation = 'fadeUp 0.4s ease both';
+  }
+
+  function formatRupiah(num) {
+    return 'Rp ' + num.toLocaleString('id-ID');
+  }
+
+  
+  function validateForm() {
+    let valid = true;
+
+    const fields = [
+      { id: 'buyerName',     msg: 'Nama tidak boleh kosong' },
+      { id: 'phoneNum',      msg: 'Nomor HP tidak boleh kosong' },
+      { id: 'cityField',     msg: 'Kota tidak boleh kosong' },
+      { id: 'addressField',  msg: 'Alamat tidak boleh kosong' },
+      { id: 'productSelect', msg: 'Silakan pilih produk' },
+    ];
+
+    fields.forEach(f => {
+      const el = document.getElementById(f.id);
+      const err = document.getElementById('err-' + f.id);
+      if (!el.value.trim()) {
+        el.classList.add('error');
+        if (err) { err.textContent = '❌ ' + f.msg; err.classList.add('show'); }
+        valid = false;
+      } else {
+        el.classList.remove('error');
+        if (err) err.classList.remove('show');
+      }
+    });
+
+    
+    const qty = parseInt(document.getElementById('qtyField').value);
+    const qtyEl = document.getElementById('qtyField');
+    const qtyErr = document.getElementById('err-qtyField');
+    if (!qty || qty < 1) {
+      qtyEl.classList.add('error');
+      qtyErr.classList.add('show');
+      valid = false;
+    } else {
+      qtyEl.classList.remove('error');
+      qtyErr.classList.remove('show');
+    }
+
+    
+    const payment = document.querySelector('input[name=payment]:checked');
+    const payErr = document.getElementById('err-payment');
+    if (!payment) {
+      payErr.classList.add('show');
+      valid = false;
+    } else {
+      payErr.classList.remove('show');
+    }
+
+    return valid;
+  }
+
+  function clearError(id) {
+    const el = document.getElementById(id);
+    const err = document.getElementById('err-' + id);
+    if (el) el.classList.remove('error');
+    if (err) err.classList.remove('show');
+  }
+
+  
+  function previewOrder() {
+    if (!validateForm()) {
+      showToast('⚠️ Lengkapi semua data yang wajib diisi!');
+      document.querySelector('.form-input.error, .form-select.error, .form-textarea.error')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    buildSummary();
+    const sumEl = document.getElementById('orderSummary');
+    sumEl.classList.add('show');
+    sumEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function buildSummary() {
+    const name     = document.getElementById('buyerName').value;
+    const phone    = document.getElementById('phoneNum').value;
+    const email    = document.getElementById('emailAddr').value;
+    const city     = document.getElementById('cityField').value;
+    const address  = document.getElementById('addressField').value;
+    const prodId   = parseInt(document.getElementById('productSelect').value);
+    const qty      = parseInt(document.getElementById('qtyField').value);
+    const note     = document.getElementById('noteField').value;
+    const payment  = document.querySelector('input[name=payment]:checked')?.value;
+    const p        = products.find(x => x.id === prodId);
+    const total    = p ? p.price * qty : 0;
+
+    const rows = [
+      ['Nama Pembeli',      name],
+      ['No. HP',            phone],
+      ['Email',             email || '—'],
+      ['Kota',              city],
+      ['Alamat',            address],
+      ['Produk',            p?.name || '—'],
+      ['Kategori',          p?.category || '—'],
+      ['Jumlah',            `${qty} unit`],
+      ['Harga Satuan',      p?.priceDisplay || '—'],
+      ['Metode Pembayaran', payment],
+      ['Catatan',           note || '—'],
+      ['TOTAL HARGA',       `<strong style="color:var(--red);font-size:18px;">${formatRupiah(total)}</strong>`],
+    ];
+
+    document.getElementById('summaryContent').innerHTML =
+      rows.map(([label, val]) => `
+        <div class="summary-item">
+          <span class="summary-label">${label}</span>
+          <span class="summary-value">${val}</span>
+        </div>
+      `).join('');
+  }
+
+  function closeSummary() {
+    document.getElementById('orderSummary').classList.remove('show');
+  }
+
+  
+  function submitOrder(e, confirmed = false) {
+    if (e) e.preventDefault();
+    if (!validateForm()) {
+      showToast('⚠️ Lengkapi semua data yang wajib diisi!');
+      return;
+    }
+    if (!confirmed && !orderConfirmed) {
+      previewOrder();
+      return;
+    }
+    
+    const name = document.getElementById('buyerName').value;
+    const p    = products.find(x => x.id === parseInt(document.getElementById('productSelect').value));
+    const qty  = parseInt(document.getElementById('qtyField').value);
+
+    showToast(`🎉 Pesanan berhasil dikirim! Terima kasih, ${name}. Kami akan menghubungi Anda segera.`);
+    closeSummary();
+    orderConfirmed = false;
+
+    
+    setTimeout(() => {
+      document.getElementById('orderSummary').innerHTML = `
+        <div style="text-align:center; padding:40px;">
+          <div style="font-size:64px; margin-bottom:16px;">✅</div>
+          <h3 style="color:var(--red);font-family:var(--font-display);font-size:28px;margin-bottom:12px;">Pesanan Diterima!</h3>
+          <p style="color:var(--gray-400);margin-bottom:24px;">Terima kasih, <strong>${name}</strong>. Pesanan <strong>${p?.name}</strong> (${qty} unit) Anda sedang diproses.</p>
+          <button class="btn btn-primary" onclick="resetForm()">📋 Buat Pesanan Baru</button>
+        </div>
+      `;
+      document.getElementById('orderSummary').classList.add('show');
+      document.getElementById('orderSummary').scrollIntoView({ behavior: 'smooth' });
+    }, 300);
+  }
+
+  function resetForm() {
+    document.getElementById('orderForm').reset();
+    document.getElementById('priceSummary').style.display = 'none';
+    document.getElementById('orderSummary').classList.remove('show');
+    document.getElementById('orderSummary').innerHTML = `
+      <h3>📋 Ringkasan Pesanan</h3>
+      <div id="summaryContent"></div>
+      <div style="margin-top:20px; display:flex; gap:12px; flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="submitOrder(null, true)">✅ Konfirmasi & Kirim</button>
+        <button class="btn btn-red-outline" onclick="closeSummary()">✏️ Edit Pesanan</button>
+      </div>
+    `;
+    document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(el => el.classList.remove('error'));
+    document.querySelectorAll('.form-error').forEach(el => el.classList.remove('show'));
+    orderConfirmed = false;
+    showToast('🔄 Form telah direset.');
+  }
+
+  let toastTimer;
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+</script>
+
+</body>
+</html>
